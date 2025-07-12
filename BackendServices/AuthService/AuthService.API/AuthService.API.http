@@ -1,0 +1,11 @@
+@AuthService.API_HostAddress = https://localhost:7237/api
+
+POST {{AuthService.API_HostAddress}}/auth/login
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "user@gmail.com",
+  "password": "User@12345678"
+}
+
+###

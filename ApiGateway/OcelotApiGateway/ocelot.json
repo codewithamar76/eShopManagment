@@ -1,0 +1,109 @@
+{
+    "Routes": [
+      {
+        "DownstreamPathTemplate": "/api/auth/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7237
+          }
+        ],
+        "UpstreamHttpMethod": [ "Post" ],
+        "UpstreamPathTemplate": "/auth/{everything}"
+      },
+      {
+        "DownstreamPathTemplate": "/api/catalog/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7113
+          }
+        ],
+        "UpstreamHttpMethod": [ "GET" ],
+        "UpstreamPathTemplate": "/catalog/{everything}"
+      },
+      {
+        "DownstreamPathTemplate": "/api/product/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7113
+          }
+        ],
+        "UpstreamHttpMethod": [ "GET", "POST" ],
+        "UpstreamPathTemplate": "/product/{everything}"
+      },
+      {
+        "DownstreamPathTemplate": "/api/cart/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7252
+          }
+        ],
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "Delete", "Patch" ],
+        "UpstreamPathTemplate": "/cart/{everything}"
+      },
+      {
+        "DownstreamPathTemplate": "/api/payment/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7116
+          }
+        ],
+        "UpstreamHttpMethod": [ "POST" ],
+        "UpstreamPathTemplate": "/payment/{everything}"
+      },
+      {
+        "DownstreamPathTemplate": "/api/order/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7067
+          }
+        ],
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "Delete", "Patch" ],
+        "UpstreamPathTemplate": "/order/{everything}"
+      },
+
+      {
+        "DownstreamPathTemplate": "/api/stock/{everything}",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7115
+          }
+        ],
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+        "UpstreamPathTemplate": "/stock/{everything}"
+      }
+    ]
+  //"GlobalConfiguration": {
+  //  "BaseUrl": "https://localhost:7237",
+  //  "RequestIdKey": "OcRequestId",
+  //  "ServiceDiscoveryProvider": {
+  //    "Host": "localhost",
+  //    "Port": 8500,
+  //    "Type": "Consul"
+  //  },
+  //  "RateLimitOptions": {
+  //    "ClientIdHeader": "X-ClientId",
+  //    "EnableRateLimiting": true,
+  //    "GeneralRules": [
+  //      {
+  //        "Endpoint": "*:/auth/{everything}",
+  //        "Period": "1s",
+  //        "Limit": 10
+  //      }
+  //    ]
+  //  }
+  //}
+ }

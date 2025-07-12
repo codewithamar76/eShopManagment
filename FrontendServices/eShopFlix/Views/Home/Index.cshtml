@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ProductModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-info" role="alert">
+        No products available.
+    </div>
+}
+else
+{
+    <div class="alert alert-success" role="alert">
+        @Model.Count() products available.
+    </div>
+
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var data in Model)
+        {
+            <div class="col">
+                <div class="card">
+                    <img src="@data.ImageUrl" style="height:150px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="d-lg-flex justify-content-between">
+                            <h5 class="card-title">@data.Name</h5>
+                            <span class="badge bg-black align-content-center">&#8377; @data.UnitPrice</span>
+                        </div>
+                        <p class="card-text">@data.Description</p>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-primary" onclick="getDetails(@data.ProductId)" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+                            @if (CurrentUser == null)
+                            {
+                                <a href="/Account/Login?returnUrl=/" class="btn btn-primary">Add To Cart</a>
+                            }
+                            else
+                            {
+                                <a href="javaScript:void(0)" onclick="AddToCart('@data.ProductId', '@data.UnitPrice', 1)"
+                                 class="btn btn-success">Add to Cart</a>
+                            }
+                        </div>
+            </div>
+            </div>
+        </div>
+    }
+</div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function getDetails(id) {
+               $.ajax({
+                   url: '@Url.Action("Details", "Home")',
+                   type: 'GET',
+                   contentType: 'application/json; charset=utf-8',
+                   data: { id: id },
+                   success: function (Detail) {
+                       // Handle the response data
+                          // Assuming data contains the HTML content for the modal body
+                          // Update the modal title if needed
+                          $('#exampleModalLabel').text('Product Details'); // Update modal title
+                          $('#modalBody').html(`
+                              <div class="card">
+            <img src=${Detail.imageUrl} class="card-img-top" alt="...">
+            <div class="card-body">
+               <div class="d-lg-flex justify-content-between">
+                   <h5 class="card-title">${Detail.name}</h5>
+                   <span class="badge bg-black align-content-center">&#8377; ${Detail.unitPrice}</span>
+               </div>
+               <p class="card-text">${Detail.description}</p>
+            </div>`);
+                       // You can update the modal content here
+                       //$('#exampleModal .modal-body').html(data);
+                       $('#exampleModal').modal('show');
+                   },
+                   error: function (xhr, status, error) {
+                       console.error("Error fetching details:", error);
+                   }
+               });
+           }
+    </script>
+}
